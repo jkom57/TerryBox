@@ -50,33 +50,54 @@ export default class LoginScreen3 extends Component {
     this.state = {
       isLoading: false,
       selectedType: null,
+      username: '',
       email: '',
       password: '',
+      confirmationPassword: '',
       emailValid: true,
       passwordValid: true,
+      usernameValid: true,
+      confirmationPasswordValid: true,
     };
 
+    this.setSelectedType = this.setSelectedType.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.validateConfirmationPassword = this.validateConfirmationPassword.bind(
+      this
+    );
     this.signup = this.signup.bind(this);
   }
 
   signup() {
     LayoutAnimation.easeInEaseOut();
+    const usernameValid = this.validateUsername();
     const emailValid = this.validateEmail();
     const passwordValid = this.validatePassword();
+    const confirmationPasswordValid = this.validateConfirmationPassword();
     if (
       emailValid &&
-      passwordValid
+      passwordValid &&
+      confirmationPasswordValid &&
+      usernameValid
     ) {
       this.setState({ isLoading: true });
       setTimeout(() => {
         LayoutAnimation.easeInEaseOut();
         this.setState({ isLoading: false });
         Alert.alert('🎸', 'You rock');
-        this.props.navigation.navigate('Main')
+        this.props.navigation.navigate('InicioDeSesion')
       }, 1500);
     }
+  }
+
+  validateUsername() {
+    const { username } = this.state;
+    const usernameValid = username.length > 0;
+    LayoutAnimation.easeInEaseOut();
+    this.setState({ usernameValid });
+    usernameValid || this.usernameInput.shake();
+    return usernameValid;
   }
 
   validateEmail() {
@@ -98,13 +119,29 @@ export default class LoginScreen3 extends Component {
     return passwordValid;
   }
 
+  validateConfirmationPassword() {
+    const { password, confirmationPassword } = this.state;
+    const confirmationPasswordValid = password === confirmationPassword;
+    LayoutAnimation.easeInEaseOut();
+    this.setState({ confirmationPasswordValid });
+    confirmationPasswordValid || this.confirmationPasswordInput.shake();
+    return confirmationPasswordValid;
+  }
+
+  setSelectedType = selectedType =>
+    LayoutAnimation.easeInEaseOut() || this.setState({ selectedType });
+
   render() {
     const {
       isLoading,
+      confirmationPassword,
       email,
       emailValid,
       password,
       passwordValid,
+      confirmationPasswordValid,
+      username,
+      usernameValid,
     } = this.state;
 
     return (
@@ -117,8 +154,23 @@ export default class LoginScreen3 extends Component {
           contentContainerStyle={styles.formContainer}
         >
             <Image source={logo} style={styles.imagen}></Image>
-          <Text style={styles.signUpText}>Inicio de Sesión</Text>
+          <Text style={styles.signUpText}>Registro</Text>
           <View style={{ width: '80%', alignItems: 'center' }}>
+            <FormInput
+              refInput={input => (this.usernameInput = input)}
+              icon="user"
+              value={username}
+              onChangeText={username => this.setState({ username })}
+              placeholder="Nombre de Usuario"
+              returnKeyType="next"
+              errorMessage={
+                usernameValid ? null : "El nombre del usuario no puede estar vacío"
+              }
+              onSubmitEditing={() => {
+                this.validateUsername();
+                this.emailInput.focus();
+              }}
+            />
             <FormInput
               refInput={input => (this.emailInput = input)}
               icon="envelope"
@@ -142,18 +194,39 @@ export default class LoginScreen3 extends Component {
               onChangeText={password => this.setState({ password })}
               placeholder="Contraseña"
               secureTextEntry
-              returnKeyType="go"
+              returnKeyType="next"
               errorMessage={
                 passwordValid ? null : 'Por favor ingresar al menos 6 caracteres'
               }
               onSubmitEditing={() => {
                 this.validatePassword();
+                this.confirmationPasswordInput.focus();
+              }}
+            />
+            <FormInput
+              refInput={input => (this.confirmationPasswordInput = input)}
+              icon="lock"
+              value={confirmationPassword}
+              onChangeText={confirmationPassword =>
+                this.setState({ confirmationPassword })
+              }
+              placeholder="Confirmar Contrasseña"
+              secureTextEntry
+              errorMessage={
+                confirmationPasswordValid
+                  ? null
+                  : 'Las contraseñas no son identicas'
+              }
+              returnKeyType="go"
+              onSubmitEditing={() => {
+                this.validateConfirmationPassword();
+                this.signup();
               }}
             />
           </View>
           <Button
             loading={isLoading}
-            title="Iniciar Sesión"
+            title="REGISTRARSE"
             containerStyle={{ flex: -1 }}
             buttonStyle={styles.signUpButton}
             titleStyle={styles.signUpButtonText}
@@ -163,15 +236,15 @@ export default class LoginScreen3 extends Component {
         </KeyboardAvoidingView>
         <View style={styles.loginHereContainer}>
           <Text style={styles.alreadyAccountText}>
-            Aún no tiene una cuenta.
+            Ya tiene una cuenta.
           </Text>
           <Button
-            title="Registrarse"
+            title="Inicie Aquí"
             titleStyle={styles.loginHereText}
             containerStyle={{ flex: -1 }}
             buttonStyle={{ backgroundColor: 'transparent' }}
             underlayColor="transparent"
-            onPress={() => this.props.navigation.navigate('Registro')}
+            onPress={() => this.props.navigation.navigate('InicioDeSesion')}
           />
         </View>
       </ScrollView>

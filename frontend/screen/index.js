@@ -6,9 +6,6 @@ export default class About extends Component{
   render(){
     return(
         <SafeAreaView style={styles.container}>
-            <View style={styles.h}>
-              <Text style={styles.text}>TerryBox</Text>
-            </View>
             <View style={styles.menu}>
               <View style={styles.opc}>
               <Button style={styles.opcbtn} title="Perfil" onPress={() => this.props.navigation.navigate("Perfil")}/>
@@ -16,7 +13,7 @@ export default class About extends Component{
               <View style={styles.opc}>
                 <Button style={styles.opcbtn} title="Módulos" onPress={() => this.props.navigation.navigate("Modulos")}/>
               </View>
-              <Text>{docs}</Text>
+              <Text></Text>
             </View>
         </SafeAreaView>
     )
