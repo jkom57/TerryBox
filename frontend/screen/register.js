@@ -81,13 +81,33 @@ export default class LoginScreen3 extends Component {
       confirmationPasswordValid &&
       usernameValid
     ) {
-      this.setState({ isLoading: true });
-      setTimeout(() => {
-        LayoutAnimation.easeInEaseOut();
-        this.setState({ isLoading: false });
-        Alert.alert('🎸', 'You rock');
-        this.props.navigation.navigate('InicioDeSesion')
-      }, 1500);
+      fetch("https://terrybox.herokuapp.com/api",{ //http://localhost:4000/api
+        method:"post",
+        headers:{
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+          name: this.state.username,
+          email: this.state.email,
+          password: this.state.password,
+        })
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        this.setState({ isLoading: true });
+        setTimeout(() => {
+          LayoutAnimation.easeInEaseOut();
+          this.setState({ isLoading: false });
+          Alert.alert(`${data.username} se ha registrado satisfactoriamente`)
+          this.props.navigation.navigate('InicioDeSesion')
+          //Alert.alert('🎸', 'You rock');
+          //this.props.navigation.navigate('InicioDeSesion')
+        }, 1500);
+      })
+      .catch(err=>{
+        Alert.alert('Algún dato ya está registrado')
+      })
     }
   }
 
@@ -112,7 +132,7 @@ export default class LoginScreen3 extends Component {
 
   validatePassword() {
     const { password } = this.state;
-    const passwordValid = password.length >= 8;
+    const passwordValid = password.length >= 6;
     LayoutAnimation.easeInEaseOut();
     this.setState({ passwordValid });
     passwordValid || this.passwordInput.shake();

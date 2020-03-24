@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
 import {Button, View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 export default class About extends Component{
   render(){
     return(
         <SafeAreaView style={styles.container}>
-            <View style={styles.h}>
-              <Text style={styles.text}>TerryBOX</Text>
-            </View>
             <View style={styles.modulos}>
               <View style={styles.modulos}>
                   <Text style={styles.mod}>Módulo 1</Text>

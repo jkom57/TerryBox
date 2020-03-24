@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Registrarse from './screen/register';
 import Sesion from './screen/login';
 import Inicio from './screen/index';
+import Modulos from './screen/modulos';
+import Perfil from './screen/perfil';
 
 const MainStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -23,14 +25,14 @@ function MainStackScreen() {
           },
           headerRight: () => (
             <Button
-              onPress={() => alert('This is a button!')}
+              onPress={() =>  alert('This is a button!')}
               title="Cerrar Sesión"
               color="rgb(200,0,0)"
             />
           ),
         }}
       />
-      <MainStack.Screen name="Perfil" component={Inicio} 
+      <MainStack.Screen name="Perfil" component={Perfil} 
         options={{
           title: 'TerryBox',
           headerStyle: {
@@ -48,7 +50,7 @@ function MainStackScreen() {
           ),
         }}
       />
-      <MainStack.Screen name="Modulos" component={Inicio} 
+      <MainStack.Screen name="Modulos" component={Modulos} 
         options={{
           title: 'TerryBox',
           headerStyle: {
@@ -73,7 +75,7 @@ function MainStackScreen() {
 function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal" headerMode="none">
+      <RootStack.Navigator mode="modal" headerMode="none" initialRouteName='InicioDeSesion'>
         <RootStack.Screen name="Registro" component={Registrarse} />
         <RootStack.Screen name="InicioDeSesion" component={Sesion} />
         <RootStack.Screen name="Main" component={MainStackScreen} />

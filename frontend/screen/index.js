@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Button, View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import {Button, View, StyleSheet, SafeAreaView} from 'react-native';
 
 export default class About extends Component{
   render(){
@@ -13,7 +12,6 @@ export default class About extends Component{
               <View style={styles.opc}>
                 <Button style={styles.opcbtn} title="Módulos" onPress={() => this.props.navigation.navigate("Modulos")}/>
               </View>
-              <Text></Text>
             </View>
         </SafeAreaView>
     )

@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
-import {Button, View, Text, StyleSheet, SafeAreaView} from 'react-native';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 
 export default class About extends Component{
   render(){
     return(
         <SafeAreaView style={styles.container}>
-            <View style={styles.h}>
-              <Text style={styles.text}>TerryBOX</Text>
-            </View>
             <View style={styles.profile}>
               <View style={styles.perfil}>
                 <Text style={styles.info}>Nombre de Usuario: </Text>
@@ -18,7 +14,6 @@ export default class About extends Component{
                 <Text style={styles.info}>Correo: </Text>
                 <Text>Correo</Text>
               </View>
-              <Button title="Cambiar Contraseña"></Button>
             </View>
         </SafeAreaView>
     )

@@ -91,7 +91,7 @@ export default class LoginScreen3 extends Component {
 
   validatePassword() {
     const { password } = this.state;
-    const passwordValid = password.length >= 8;
+    const passwordValid = password.length >= 6;
     LayoutAnimation.easeInEaseOut();
     this.setState({ passwordValid });
     passwordValid || this.passwordInput.shake();
@@ -148,6 +148,7 @@ export default class LoginScreen3 extends Component {
               }
               onSubmitEditing={() => {
                 this.validatePassword();
+                this.signup()
               }}
             />
           </View>

@@ -26,7 +26,7 @@ usersCtrl.createUser = async (req, res) => {
     errors.push({ text: "Las contraseñas no coinciden" });
   }
   if (password.length < 6) {
-    errors.push({ text: "Las contraseñas deben tener al menos 4 caracteres" });
+    errors.push({ text: "Las contraseñas deben tener al menos 6 caracteres" });
   }
   if (errors.length > 0) {
     res.json(errors.pop)
@@ -37,7 +37,8 @@ usersCtrl.createUser = async (req, res) => {
       res.redirect("/users/signup");
     } else {
         const newUser = new User({ 
-            name:name, email:email,
+            name:name,
+            email:email,
             password:password });
             //newUser.password = await newUser.encryptPassword(password);
         await newUser.save();
