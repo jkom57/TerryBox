@@ -82,7 +82,7 @@ export default class LoginScreen3 extends Component {
       confirmationPasswordValid &&
       usernameValid
     ) {
-      await fetch('http://localhost:4000/api', {method:'POST', body: JSON.stringify({name:this.state.username, email:this.state.email, password:this.state.password})})
+      await fetch('https://terrybox.herokuapp.com/api', {method:'POST', body: JSON.stringify({name:this.state.username, email:this.state.email, password:this.state.password})})
       .then(res => {
         return res.text()
       })
