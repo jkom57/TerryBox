@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import logo from '../assets/icon.png';
+import axios from 'axios';
 
 // Enable LayoutAnimation on Android
 UIManager.setLayoutAnimationEnabledExperimental &&
@@ -69,7 +70,7 @@ export default class LoginScreen3 extends Component {
     this.signup = this.signup.bind(this);
   }
 
-  signup() {
+  async signup() {
     LayoutAnimation.easeInEaseOut();
     const usernameValid = this.validateUsername();
     const emailValid = this.validateEmail();
@@ -81,33 +82,43 @@ export default class LoginScreen3 extends Component {
       confirmationPasswordValid &&
       usernameValid
     ) {
-      fetch("https://terrybox.herokuapp.com/api",{ //http://localhost:4000/api
+      await fetch('http://localhost:4000/api', {method:'POST', body: JSON.stringify({name:this.state.username, email:this.state.email, password:this.state.password})})
+      .then(res => {
+        return res.text()
+      })
+      .then(res => {
+      /*await axios.post("https://terrybox.herokuapp.com/api", {
+        name: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+      })*/
+      /*fetch("https://terrybox.herokuapp.com/api",{ //http://localhost:4000/api
         method:"post",
         headers:{
-          Accept: 'application/json',
+          //Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         body:JSON.stringify({
-          name: this.state.username,
+          username: this.state.username,
           email: this.state.email,
           password: this.state.password,
         })
       })
       .then(res=>res.json())
-      .then(data=>{
+      .then(data=>{*/
         this.setState({ isLoading: true });
         setTimeout(() => {
           LayoutAnimation.easeInEaseOut();
           this.setState({ isLoading: false });
-          Alert.alert(`${data.username} se ha registrado satisfactoriamente`)
+          Alert.alert('Registrado',`Se ha registrado satisfactoriamente`)
           this.props.navigation.navigate('InicioDeSesion')
           //Alert.alert('🎸', 'You rock');
           //this.props.navigation.navigate('InicioDeSesion')
         }, 1500);
-      })
+      })/*
       .catch(err=>{
         Alert.alert('Algún dato ya está registrado')
-      })
+      })*/
     }
   }
 

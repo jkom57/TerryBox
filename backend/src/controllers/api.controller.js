@@ -34,7 +34,7 @@ usersCtrl.createUser = async (req, res) => {
     const emailUser = await User.findOne({ email: email });
     if (emailUser) {
       req.flash("error_msg", "Este correo ya está en uso");
-      res.redirect("/users/signup");
+      //res.redirect("/users/signup");
     } else {
         const newUser = new User({ 
             name:name,

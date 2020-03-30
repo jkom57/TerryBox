@@ -1,18 +1,40 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
+import axios from 'axios';
 
 export default class About extends Component{
+  state = {
+    users: []
+  }
+  
+  async componentDidMount() {
+    const res = await axios.get('https://terrybox.herokuapp.com/api')
+    this.setState({users: res.data})
+  }
+
   render(){
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.profile}>
               <View style={styles.perfil}>
                 <Text style={styles.info}>Nombre de Usuario: </Text>
-                <Text>Usuario</Text>
+                {
+                  this.state.users.map(user=> <Text key={user._id}>
+                    {
+                      user.name
+                    }
+                  </Text>)
+                }
               </View>
               <View style={styles.perfil}>
                 <Text style={styles.info}>Correo: </Text>
-                <Text>Correo</Text>
+                {
+                  this.state.users.map(user=> <Text key={user._id}>
+                    {
+                      user.email
+                    }
+                  </Text>)
+                }
               </View>
             </View>
         </SafeAreaView>
